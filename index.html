@@ -214,8 +214,12 @@ function playPhonic(letter){
         const audio = new Audio(phonics[letter]);
 
         audio.onended = resolve;
+        audio.onended = resolve;
 
         audio.play();
+        .catch(()=>{
+            resolve();
+    });
 
     });
  }
