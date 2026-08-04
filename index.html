@@ -147,28 +147,7 @@ body{
 
 </body>
 <script>
-let audioUnlocked = false;
 
-document.body.addEventListener("pointerup",()=>{
-
-    if(audioUnlocked) return;
-
-    audioUnlocked = true;
-
-    const audio = new Audio("sounds/s.wav");
-
-    audio.volume = 0.01;
-
-    audio.play()
-    .then(()=>{
-
-        audio.pause();
-        audio.currentTime = 0;
-
-    })
-    .catch(()=>{});
-
-},{ once:true });
 const lesson = {
  1:[
      ["sat","pin","tap","pan","sit"],
@@ -201,12 +180,33 @@ const lesson = {
   let currentWord = 0;
   let words = lesson[currentLesson][currentGroup];
   let lessonToken = 0;
-
+  let audioWarmed = false;
 const board = document.getElementById("board");
 const lessonTitle = document.getElementById("lessonTitle");
 const eraseBtn = document.getElementById("eraseBtn");
 eraseBtn.addEventListener("click", eraseBoard);
+async function warmAudio(){
 
+    if(audioWarmed) return;
+
+    audioWarmed = true;
+
+    const audio = new Audio("sounds/s.wav");
+
+    audio.volume = 0;
+
+    try{
+
+        await audio.play();
+
+        audio.pause();
+        audio.currentTime = 0;
+
+    }catch(e){
+
+    }
+
+}
 function playPhonic(letter){
 
     return new Promise(resolve=>{
@@ -216,10 +216,8 @@ function playPhonic(letter){
         audio.onended = resolve;
         audio.onended = resolve;
 
-        audio.play();
-        .catch(()=>{
-            resolve();
-    });
+        audio.play().catch(resolve);
+    
 
     });
  }
