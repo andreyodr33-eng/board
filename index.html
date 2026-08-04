@@ -189,12 +189,12 @@ eraseBtn.addEventListener("click", eraseBoard);
 function playPhonic(letter){
 
     return new Promise(resolve=>{
+       setTimeout(resolve,500);
+       // const audio = new Audio(phonics[letter]);
 
-        const audio = new Audio(phonics[letter]);
+       // audio.onended = resolve;
 
-        audio.onended = resolve;
-
-        audio.play();
+       // audio.play();
 
     });
  }
