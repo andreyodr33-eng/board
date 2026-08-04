@@ -147,7 +147,28 @@ body{
 
 </body>
 <script>
+let audioUnlocked = false;
 
+document.body.addEventListener("pointerup",()=>{
+
+    if(audioUnlocked) return;
+
+    audioUnlocked = true;
+
+    const audio = new Audio("sounds/s.wav");
+
+    audio.volume = 0.01;
+
+    audio.play()
+    .then(()=>{
+
+        audio.pause();
+        audio.currentTime = 0;
+
+    })
+    .catch(()=>{});
+
+},{ once:true });
 const lesson = {
  1:[
      ["sat","pin","tap","pan","sit"],
@@ -189,12 +210,12 @@ eraseBtn.addEventListener("click", eraseBoard);
 function playPhonic(letter){
 
     return new Promise(resolve=>{
-       setTimeout(resolve,500);
-       // const audio = new Audio(phonics[letter]);
+       
+        const audio = new Audio(phonics[letter]);
 
-       // audio.onended = resolve;
+        audio.onended = resolve;
 
-       // audio.play();
+        audio.play();
 
     });
  }
