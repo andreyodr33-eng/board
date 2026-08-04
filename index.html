@@ -4,123 +4,78 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reading Board</title>
-
 <style>
 body{
     margin:0;
     background:#111;
     font-family:Arial, sans-serif;
 }
-
 #board{
-
     width:100vw;
     height:100vh;
-
     background:#1c1c1c;
-
     display:flex;
     flex-direction:column;
-
     justify-content:flex-start;
-
     padding:30px;
-
     box-sizing:border-box;
-
     overflow:hidden;
 }
 
 .word{
-
     margin-bottom:35px;
-
     font-size:52px;
-
     color:white;
-
     letter-spacing:12px;
-
     min-height:70px;
-
     user-select:none;
 }
-
 .letter{
-
     position:relative;
-
     display:inline-block;
-
     transition:.4s;
 }
 .letter.active{
     color:white;
 }
-
-
 .done{
     color:#44cc44;
 }
-
 .pointer{
-
     position:absolute;
-
     left:50%;
-
     bottom:-42px;
-
     transform:translateX(-50%);
-
     font-size:28px;
-
     color:#ffd700;
 }
  .hidden{
       color:#1c1c1c;
 }
 #eraseBtn{
-
     position:fixed;
-
     right:20px;
-
     bottom:20px;
-
     font-size:50px;
-
     border:none;
-
     background:none;
-
     cursor:pointer;
-
     display:none;
 }
 @keyframes crumble{
-
     0%{
-
         opacity:1;
-
         transform:translate(0,0) rotate(0deg);
-
-    }
-
+ }
     100%{
-
         opacity:0;
-
         transform:translate(var(--dx),40px)
                   rotate(var(--rot));
-
     }
 }
 
 .crumble{
-
-    animation:crumble 1s forwards;
+     animation:crumble 1s forwards;
 }
 #lessonTitle{
 
@@ -205,10 +160,6 @@ const lesson = {
      ["cap","cop","cup","cut","cot"]
    ]
  };
- 
- 
-
-
  const phonics = {
      s:"sounds/s.wav",
      a:"sounds/a.wav",
@@ -263,9 +214,6 @@ function updateLessonTitle(){
 updateLessonTitle();
 
 let pressTimer;
-
-
-
  lessonTitle.addEventListener("pointerdown",()=>{
 
     pressTimer = setTimeout(()=>{
@@ -346,16 +294,6 @@ let pressTimer;
 
 });
       
-
-  
-
-    
-
-    
-    
-
-    
-
 lessonTitle.addEventListener("pointerup",()=>{
 
     clearTimeout(pressTimer);
@@ -367,10 +305,6 @@ lessonTitle.addEventListener("pointerleave",()=>{
     clearTimeout(pressTimer);
 
 });
-
-
-
-
 
  function speak(text){
 
