@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Board</title>
+
+<style>
+body{
+    margin:0;
+    background:#111;
+    font-family:Arial, sans-serif;
+}
+
+#board{
+
+    width:100vw;
+    height:100vh;
+
+    background:#1c1c1c;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:flex-start;
+
+    padding:30px;
+
+    box-sizing:border-box;
+
+    overflow:hidden;
+}
+
+.word{
+
+    margin-bottom:35px;
+
+    font-size:52px;
+
+    color:white;
+
+    letter-spacing:12px;
+
+    min-height:70px;
+
+    user-select:none;
+}
+
+.letter{
+
+    position:relative;
+
+    display:inline-block;
+
+    transition:.4s;
+}
+.letter.active{
+    color:white;
+}
+
+
+.done{
+    color:#44cc44;
+}
+
+.pointer{
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:-42px;
+
+    transform:translateX(-50%);
+
+    font-size:28px;
+
+    color:#ffd700;
+}
+ .hidden{
+      color:#1c1c1c;
+}
+#eraseBtn{
+
+    position:fixed;
+
+    right:20px;
+
+    bottom:20px;
+
+    font-size:50px;
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    display:none;
+}
+@keyframes crumble{
+
+    0%{
+
+        opacity:1;
+
+        transform:translate(0,0) rotate(0deg);
+
+    }
+
+    100%{
+
+        opacity:0;
+
+        transform:translate(var(--dx),40px)
+                  rotate(var(--rot));
+
+    }
+}
+
+.crumble{
+
+    animation:crumble 1s forwards;
+}
+#lessonTitle{
+
+    position:absolute;
+
+    top:15px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    color:white;
+
+    font-size:28px;
+
+    font-family:cursive;
+
+    opacity:.85;
+
+    user-select:none;
+
+    text-shadow:
+        1px 1px 2px rgba(255,255,255,.25),
+       -1px -1px 2px rgba(255,255,255,.15);
+}
+#lessonPanel{
+
+    position:absolute;
+
+    top:50%;
+
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    background:#1c1c1c;
+
+    border:2px solid white;
+
+    padding:20px;
+
+    color:white;
+
+    font-size:24px;
+
+    z-index:1000;
+}
+
+#lessonPanel button{
+
+    background:none;
+
+    border:none;
+
+    color:white;
+
+    font-size:24px;
+
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="board"></div>
+<div id="lessonTitle">Lesson1</div>
+<button id="eraseBtn">🧤</button>
+
+</body>
+<script>
+
+const lesson = {
+ 1:[
+     ["sat","pin","tap","pan","sit"],
+     ["pat","hip","tip","sap","tan"],
+     ["ant","nap","pit","sip","tin"]
+  ],
+ 2:[
+
+     ["cat","kit","can","kid","cot"],
+     ["cap","cop","cup","cut","cot"]
+   ]
+ };
+ 
+ 
+
+
+ const phonics = {
+     s:"sounds/s.wav",
+     a:"sounds/a.wav",
+     t:"sounds/t.wav",
+     i:"sounds/i.wav",
+     p:"sounds/p.wav",
+     n:"sounds/n.wav",
+     h:"sounds/h.wav",
+     c:"sounds/c.wav",
+     k:"sounds/k.wav",
+     o:"sounds/o.wav",
+     u:"sounds/u.wav",
+     d:"sounds/d.wav"
+};
+  
+  let currentLesson = 1;
+  let currentGroup = 0;
+  let currentWord = 0;
+  let words = lesson[currentLesson][currentGroup];
+  let lessonToken = 0;
+
+const board = document.getElementById("board");
+const lessonTitle = document.getElementById("lessonTitle");
+const eraseBtn = document.getElementById("eraseBtn");
+eraseBtn.addEventListener("click", eraseBoard);
+
+function playPhonic(letter){
+
+    return new Promise(resolve=>{
+
+        const audio = new Audio(phonics[letter]);
+
+        audio.onended = resolve;
+
+        audio.play();
+
+    });
+ }
+
+ function updateLessonTitle(){
+      lessonTitle.textContent =
+        "Lesson " + currentLesson;
+ }
+ updateLessonTitle();
+
+function updateLessonTitle(){
+
+    lessonTitle.textContent =
+        "Lesson " + currentLesson;
+}
+
+updateLessonTitle();
+
+let pressTimer;
+
+
+
+ lessonTitle.addEventListener("pointerdown",()=>{
+
+    pressTimer = setTimeout(()=>{
+
+        const password = prompt("Пароль");
+
+        if(password === "1234"){
+
+            const panel = document.createElement("div");
+
+            panel.id = "lessonPanel";
+
+            panel.innerHTML = `
+                <button id="prevLesson">◀</button>
+                <span id="panelLesson">
+                    Lesson ${currentLesson}
+                </span>
+                <button id="nextLesson">▶</button>
+
+                <br><br>
+
+                <button id="startLesson">START</button>
+            `;
+
+            document.body.appendChild(panel);
+
+            document.getElementById("prevLesson")
+            .addEventListener("click",()=>{
+
+                if(currentLesson > 1){
+
+                    currentLesson--;
+
+                    document.getElementById("panelLesson")
+                    .textContent =
+                        "Lesson " + currentLesson;
+                }
+
+            });
+
+            document.getElementById("nextLesson")
+            .addEventListener("click",()=>{
+
+                if(currentLesson < Object.keys(lesson).length){
+
+                    currentLesson++;
+
+                    document.getElementById("panelLesson")
+                    .textContent =
+                        "Lesson " + currentLesson;
+                }
+
+            });
+
+            document.getElementById("startLesson")
+            .addEventListener("click",()=>{
+
+                lessonToken++;
+
+                updateLessonTitle();
+
+                currentGroup = 0;
+                currentWord = 0;
+
+                words = lesson[currentLesson][currentGroup];
+
+                board.innerHTML = "";
+
+                panel.remove();
+
+                showNextWord();
+
+            });
+
+        }
+
+    },3000);
+
+});
+      
+
+  
+
+    
+
+    
+    
+
+    
+
+lessonTitle.addEventListener("pointerup",()=>{
+
+    clearTimeout(pressTimer);
+
+});
+
+lessonTitle.addEventListener("pointerleave",()=>{
+
+    clearTimeout(pressTimer);
+
+});
+
+
+
+
+
+ function speak(text){
+
+    const u = new SpeechSynthesisUtterance(text);
+
+    u.lang = "en-GB";
+
+    speechSynthesis.speak(u);
+ }
+
+ function delay(ms){
+
+    return new Promise(resolve => {
+
+        setTimeout(resolve, ms);
+
+    });
+}
+
+ async function readWord(wordDiv, word){
+    const myToken = lessonToken;
+    const letters = wordDiv.querySelectorAll(".letter");
+    const hand = document.createElement("div");
+    hand.className = "pointer";
+    hand.textContent = "☝"; 
+    letters[0].appendChild(hand);
+    await delay(2000);
+   for(let i=1;i<letters.length;i++){
+     letters[i].appendChild(hand);
+     letters[i].classList.add("active");
+     await playPhonic(word[i-1]);
+     await delay(1200);
+     letters[i].classList.remove("active");
+    }
+     hand.remove();
+
+    await delay(500);
+
+    letters.forEach(l => {
+
+        l.classList.add("done");
+
+    });
+
+    speak(word);
+
+    wordDiv.dataset.word = word;
+
+    wordDiv.addEventListener("click",()=>{
+
+        replayWord(wordDiv, word);
+
+    });
+
+    await delay(1500);
+    if(myToken !== lessonToken) return;
+    showNextWord();
+
+}
+
+async function replayWord(wordDiv, word){
+
+    const letters = wordDiv.querySelectorAll(".letter");
+
+    const hand = document.createElement("div");
+
+    hand.className = "pointer";
+
+    hand.textContent = "☝";
+
+    letters[0].appendChild(hand);
+
+    await delay(500);
+
+    for(let i=1;i<letters.length;i++){
+
+        letters[i].appendChild(hand);
+
+        letters[i].classList.add("active");
+
+        await playPhonic(word[i-1]);
+
+        await delay(300);
+
+        letters[i].classList.remove("active");
+    }
+
+    hand.remove();
+
+    await delay(300);
+
+    speak(word);
+}
+function createWord(word){
+
+    const div = document.createElement("div");
+
+    div.className = "word";
+ //невидимая первая буква
+ const hidden = document.createElement("span")
+ hidden.className = "letter hidden";
+ hidden.textContent = "x";
+ div.appendChild(hidden);
+    [...word].forEach(ch=>{
+
+        const span = document.createElement("span");
+
+        span.className = "letter";
+
+        span.textContent = ch;
+
+        div.appendChild(span);
+    });
+
+    return div;
+}
+
+function showNextWord(){
+
+   if(currentWord >= words.length){
+
+    eraseBtn.style.display = "block";
+
+    return;
+}
+
+    if(board.children.length >= 5){
+
+        board.removeChild(board.firstElementChild);
+    }
+
+    const word = words[currentWord];
+
+    const wordDiv = createWord(word);
+
+    board.appendChild(wordDiv);
+
+    currentWord++;
+
+    readWord(wordDiv, word);
+}
+document.body.addEventListener("pointerup", () => {
+
+    showNextWord();
+
+}, { once:true });
+
+async function eraseBoard(){
+
+    eraseBtn.style.display = "none";
+
+    const allWords = board.querySelectorAll(".word");
+
+    allWords.forEach(word=>{
+
+        const letters = word.querySelectorAll(".letter");
+
+        letters.forEach(letter=>{
+
+            const dx = Math.random()*40 - 20;
+
+            const rot = Math.random()*120 - 60;
+
+            letter.style.setProperty("--dx", dx + "px");
+
+            letter.style.setProperty("--rot", rot + "deg");
+
+            letter.classList.add("crumble");
+
+        });
+
+    });
+
+    await delay(1200);
+
+    board.innerHTML = "";
+
+    currentGroup++;
+
+    if(currentGroup >= lesson.length){
+
+        currentGroup = 0;
+
+    }
+
+    words = lesson[currentLesson][currentGroup];
+
+    currentWord = 0;
+
+    showNextWord();
+}
+
+</script>
+</html>
+</body>
