@@ -192,6 +192,7 @@ body{
 
 </body>
 <script>
+let isReading = false;    
 let audioWarmed = false;    
 const phonicAudio = new Audio();
 const lesson = {
@@ -411,6 +412,7 @@ function speak(text){
 }
 
  async function readWord(wordDiv, word){
+    isReading = true;  
     const myToken = lessonToken;
     const letters = wordDiv.querySelectorAll(".letter");
     const hand = document.createElement("div");
@@ -440,13 +442,14 @@ function speak(text){
     wordDiv.dataset.word = word;
 
     wordDiv.addEventListener("click",()=>{
-
+        if(isReading) return;
         replayWord(wordDiv, word);
 
     });
 
     await delay(1500);
     if(myToken !== lessonToken) return;
+    isReading = false; 
     showNextWord();
 
 }
