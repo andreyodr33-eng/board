@@ -192,6 +192,7 @@ body{
 
 </body>
 <script>
+let audioWarmed = false;    
 const phonicAudio = new Audio();
 const lesson = {
  1:[
@@ -205,10 +206,6 @@ const lesson = {
      ["cap","cop","cup","cut","cot"]
    ]
  };
- 
- 
-
-
  const phonics = {
      s:"sounds/s.wav",
      a:"sounds/a.wav",
@@ -234,7 +231,29 @@ const board = document.getElementById("board");
 const lessonTitle = document.getElementById("lessonTitle");
 const eraseBtn = document.getElementById("eraseBtn");
 eraseBtn.addEventListener("click", eraseBoard);
+    
+async function warmAudio(){
 
+    if(audioWarmed) return;
+
+    audioWarmed = true;
+
+    const audio = new Audio("sounds/s.wav");
+
+    audio.volume = 0;
+
+    try{
+
+        await audio.play();
+
+        audio.pause();
+        audio.currentTime = 0;
+
+    }catch(e){
+
+    }
+
+}
 function playPhonic(letter){
 
     return new Promise(resolve=>{
