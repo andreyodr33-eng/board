@@ -472,15 +472,7 @@ function speak(text){
 
     });
 
-    phonicAudio.pause();
-phonicAudio.currentTime = 0;
-
-phonicAudio.removeAttribute("src");
-phonicAudio.load();
-
-await delay(500);
-
-speak(word);
+    speak("hello");
      
 
     wordDiv.dataset.word = word;
