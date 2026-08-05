@@ -193,7 +193,7 @@ body{
 </body>
 <script>
     
-let audioWarmed = false;    
+//let audioWarmed = false;    
 const phonicAudio = new Audio();
 const lesson = {
  1:[
@@ -255,8 +255,8 @@ async function warmAudio(){
     }
 
 }
-async function playPhonic(letter){
-    await warmAudio();
+ function playPhonic(letter){
+    
     return new Promise(resolve=>{
 
         phonicAudio.pause();
