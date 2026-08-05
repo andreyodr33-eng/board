@@ -255,7 +255,7 @@ async function warmAudio(){
     }
 
 }
-function playPhonic(letter){
+await function playPhonic(letter){
     await warmAudio();
     return new Promise(resolve=>{
 
