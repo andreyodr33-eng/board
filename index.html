@@ -439,7 +439,17 @@ function speak(text){
 
     });
 
-    alert(word);
+    speechSynthesis.cancel();
+
+setTimeout(()=>{
+
+    const u = new SpeechSynthesisUtterance(word);
+
+    u.lang = "en-GB";
+
+    speechSynthesis.speak(u);
+
+},500);
 
     wordDiv.dataset.word = word;
 
