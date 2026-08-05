@@ -227,7 +227,7 @@ const lesson = {
   let currentWord = 0;
   let words = lesson[currentLesson][currentGroup];
   let lessonToken = 0;
-let isReading = false;
+//let isReading = false;
 const board = document.getElementById("board");
 const lessonTitle = document.getElementById("lessonTitle");
 const eraseBtn = document.getElementById("eraseBtn");
@@ -412,7 +412,7 @@ function speak(text){
 }
 
  async function readWord(wordDiv, word){
-    isReading = true;  
+    //isReading = true;  
     const myToken = lessonToken;
     const letters = wordDiv.querySelectorAll(".letter");
     const hand = document.createElement("div");
@@ -442,13 +442,13 @@ function speak(text){
     wordDiv.dataset.word = word;
 
     wordDiv.addEventListener("click",()=>{
-        if(isReading) return;
+       // if(isReading) return;
         replayWord(wordDiv, word);
 
     });
 
     await delay(1500);
-      isReading = false;
+     // isReading = false;
     if(myToken !== lessonToken) return;
     
     showNextWord();
