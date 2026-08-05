@@ -192,7 +192,7 @@ body{
 
 </body>
 <script>
-let isReading = false;    
+    
 let audioWarmed = false;    
 const phonicAudio = new Audio();
 const lesson = {
@@ -227,7 +227,7 @@ const lesson = {
   let currentWord = 0;
   let words = lesson[currentLesson][currentGroup];
   let lessonToken = 0;
-
+let isReading = false;
 const board = document.getElementById("board");
 const lessonTitle = document.getElementById("lessonTitle");
 const eraseBtn = document.getElementById("eraseBtn");
