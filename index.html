@@ -192,7 +192,7 @@ body{
 
 </body>
 <script>
-
+let audioWarmed = false;
 const lesson = {
  1:[
      ["sat","pin","tap","pan","sit"],
@@ -231,16 +231,39 @@ const board = document.getElementById("board");
 const lessonTitle = document.getElementById("lessonTitle");
 const eraseBtn = document.getElementById("eraseBtn");
 eraseBtn.addEventListener("click", eraseBoard);
+    
+async function warmAudio(){
 
+    if(audioWarmed) return;
+
+    audioWarmed = true;
+
+    const audio = new Audio("sounds/s.wav");
+
+    audio.volume = 0;
+
+    try{
+
+        await audio.play();
+
+        audio.pause();
+        audio.currentTime = 0;
+
+    }catch(e){
+
+    }
+
+}
 function playPhonic(letter){
-
+    await warmAudio();
     return new Promise(resolve=>{
 
         const audio = new Audio(phonics[letter]);
 
         audio.onended = resolve;
+        audio.onended = resolve;
 
-        audio.play();
+        audio.play().catch(resolve);
 
     });
  }
