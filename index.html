@@ -448,8 +448,9 @@ function speak(text){
     });
 
     await delay(1500);
+      isReading = false;
     if(myToken !== lessonToken) return;
-    isReading = false; 
+    
     showNextWord();
 
 }
