@@ -147,6 +147,7 @@ body{
 
 </body>
 <script>
+const phonicAudio = Audio();    
 let audioWarmed = false;
 async function warmAudio(){
     if(audioWarmed) return;
@@ -212,21 +213,27 @@ async function warmAudio(){
     }
 
 }
+
 function playPhonic(letter){
 
     return new Promise(resolve=>{
-       
-        const audio = new Audio(phonics[letter]);
 
-        audio.onended = resolve;
-        audio.onended = resolve;
+        phonicAudio.pause();
 
-        audio.play().catch(resolve);
-    
+        phonicAudio.currentTime = 0;
+
+        phonicAudio.src = phonics[letter];
+
+        phonicAudio.onended = resolve;
+
+        phonicAudio.onerror = resolve;
+
+        phonicAudio.play()
+        .catch(resolve);
 
     });
- }
 
+}
  function updateLessonTitle(){
       lessonTitle.textContent =
         "Lesson " + currentLesson;
