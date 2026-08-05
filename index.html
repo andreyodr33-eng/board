@@ -394,7 +394,7 @@ lessonTitle.addEventListener("pointerleave",()=>{
 });
 
 function speak(text){
-
+   speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
 
     u.lang = "en-GB";
