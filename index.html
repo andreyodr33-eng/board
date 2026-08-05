@@ -192,7 +192,9 @@ body{
 
 </body>
 <script>
-let audioWarmed = false;
+    
+let audioWarmed = false;    
+const phonicAudio = new Audio();
 const lesson = {
  1:[
      ["sat","pin","tap","pan","sit"],
@@ -205,7 +207,6 @@ const lesson = {
      ["cap","cop","cup","cut","cot"]
    ]
  };
- 
  const phonics = {
      s:"sounds/s.wav",
      a:"sounds/a.wav",
@@ -226,7 +227,7 @@ const lesson = {
   let currentWord = 0;
   let words = lesson[currentLesson][currentGroup];
   let lessonToken = 0;
-
+  let isReading = false;
 const board = document.getElementById("board");
 const lessonTitle = document.getElementById("lessonTitle");
 const eraseBtn = document.getElementById("eraseBtn");
@@ -254,19 +255,28 @@ async function warmAudio(){
     }
 
 }
-async function playPhonic(letter){
-    await warmAudio();
+function playPhonic(letter){
+
     return new Promise(resolve=>{
 
-        const audio = new Audio(phonics[letter]);
+        phonicAudio.pause();
 
-        audio.onended = resolve;
-        audio.onerror = resolve;
+        phonicAudio.removeAttribute("src");
 
-        audio.play().catch(resolve);
+        phonicAudio.load();
+
+        phonicAudio.src = phonics[letter];
+
+        phonicAudio.onended = resolve;
+
+        phonicAudio.onerror = resolve;
+
+        phonicAudio.play()
+        .catch(resolve);
 
     });
- }
+
+}
 
  function updateLessonTitle(){
       lessonTitle.textContent =
@@ -284,7 +294,9 @@ updateLessonTitle();
 
 let pressTimer;
 
-lessonTitle.addEventListener("pointerdown",()=>{
+
+
+ lessonTitle.addEventListener("pointerdown",()=>{
 
     pressTimer = setTimeout(()=>{
 
@@ -339,7 +351,7 @@ lessonTitle.addEventListener("pointerdown",()=>{
             });
 
             document.getElementById("startLesson")
-            .addEventListener("click",()=>{
+            .addEventListener("click", async()=>{
 
                 lessonToken++;
 
@@ -353,7 +365,12 @@ lessonTitle.addEventListener("pointerdown",()=>{
                 board.innerHTML = "";
 
                 panel.remove();
-
+               // try{
+                //    phonicAudio.src = phonics["s"];
+                 //   await phonicAudio.play();
+                  //   phonicAudio.pause();
+                   //  phonicAudio.currentTime = 0;
+              //  }catch(e){}
                 showNextWord();
 
             });
@@ -363,7 +380,7 @@ lessonTitle.addEventListener("pointerdown",()=>{
     },3000);
 
 });
-
+      
 lessonTitle.addEventListener("pointerup",()=>{
 
     clearTimeout(pressTimer);
@@ -376,13 +393,15 @@ lessonTitle.addEventListener("pointerleave",()=>{
 
 });
 
- function speak(text){
-
+function speak(text){
+   speechSynthesis.cancel();
+    setTimeout(()=>{
     const u = new SpeechSynthesisUtterance(text);
 
     u.lang = "en-GB";
 
     speechSynthesis.speak(u);
+},100);
  }
 
  function delay(ms){
@@ -395,13 +414,14 @@ lessonTitle.addEventListener("pointerleave",()=>{
 }
 
  async function readWord(wordDiv, word){
+    isReading = true;  
     const myToken = lessonToken;
     const letters = wordDiv.querySelectorAll(".letter");
     const hand = document.createElement("div");
     hand.className = "pointer";
     hand.textContent = "☝"; 
     letters[0].appendChild(hand);
-    await delay(500);
+    await delay(700);
    for(let i=1;i<letters.length;i++){
      letters[i].appendChild(hand);
      letters[i].classList.add("active");
@@ -424,13 +444,15 @@ lessonTitle.addEventListener("pointerleave",()=>{
     wordDiv.dataset.word = word;
 
     wordDiv.addEventListener("click",()=>{
-
+       if(isReading) return;
         replayWord(wordDiv, word);
 
     });
 
     await delay(1500);
+     isReading = false;
     if(myToken !== lessonToken) return;
+    
     showNextWord();
 
 }
@@ -570,3 +592,4 @@ async function eraseBoard(){
 </script>
 </html>
 </body>
+
