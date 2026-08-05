@@ -394,15 +394,48 @@ lessonTitle.addEventListener("pointerleave",()=>{
 });
 
 function speak(text){
-   speechSynthesis.cancel();
-    setTimeout(()=>{
-    const u = new SpeechSynthesisUtterance(text);
 
-    u.lang = "en-GB";
+    speechSynthesis.cancel();
 
-    speechSynthesis.speak(u);
-},100);
- }
+    const utter =
+        new SpeechSynthesisUtterance(text);
+
+    utter.lang = "en-US";
+    utter.rate = 0.8;
+
+    const voices =
+        speechSynthesis.getVoices();
+
+    const englishVoice =
+
+        voices.find(v =>
+            v.name === "Samantha"
+        )
+
+        ||
+
+        voices.find(v =>
+            v.name === "Daniel"
+        )
+
+        ||
+
+        voices.find(v =>
+            v.lang.includes("en")
+        );
+
+    if(englishVoice){
+
+        utter.voice =
+            englishVoice;
+
+    }
+
+    speechSynthesis.speak(
+        utter
+    );
+
+}
 
  function delay(ms){
 
