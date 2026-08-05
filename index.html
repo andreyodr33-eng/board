@@ -395,6 +395,7 @@ lessonTitle.addEventListener("pointerleave",()=>{
 
 function speak(text){
    speechSynthesis.cancel();
+    setTimeout(()=>{
     const u = new SpeechSynthesisUtterance(text);
 
     u.lang = "en-GB";
