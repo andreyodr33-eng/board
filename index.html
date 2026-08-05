@@ -147,7 +147,7 @@ body{
 
 </body>
 <script>
-
+let audioWarmed = false;
 const lesson = {
  1:[
      ["sat","pin","tap","pan","sit"],
@@ -180,7 +180,7 @@ const lesson = {
   let currentWord = 0;
   let words = lesson[currentLesson][currentGroup];
   let lessonToken = 0;
-  let audioWarmed = false;
+
 const board = document.getElementById("board");
 const lessonTitle = document.getElementById("lessonTitle");
 const eraseBtn = document.getElementById("eraseBtn");
