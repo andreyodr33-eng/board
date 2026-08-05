@@ -241,7 +241,9 @@ function playPhonic(letter){
 
         phonicAudio.pause();
 
-        phonicAudio.currentTime = 0;
+        phonicAudio.removeAttribute("src");
+
+        phonicAudio.load();
 
         phonicAudio.src = phonics[letter];
 
