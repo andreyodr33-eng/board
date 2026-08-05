@@ -192,7 +192,7 @@ body{
 
 </body>
 <script>
-const phonicAudio = document.createElement("audio");
+const phonicAudio = new Audio();
 const lesson = {
  1:[
      ["sat","pin","tap","pan","sit"],
@@ -239,20 +239,15 @@ function playPhonic(letter){
 
     return new Promise(resolve=>{
 
-        phonicAudio.pause();
+        const audio =
+        new Audio(
+            phonics[letter]
+        );
 
-        phonicAudio.removeAttribute("src");
+        audio.onended =
+            ()=>resolve();
 
-        phonicAudio.load();
-
-        phonicAudio.src = phonics[letter];
-
-        phonicAudio.onended = resolve;
-
-        phonicAudio.onerror = resolve;
-
-        phonicAudio.play()
-        .catch(resolve);
+        audio.play();
 
     });
 
