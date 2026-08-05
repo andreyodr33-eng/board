@@ -472,8 +472,16 @@ function speak(text){
 
     });
 
-    
-     speak(word);
+    phonicAudio.pause();
+phonicAudio.currentTime = 0;
+
+phonicAudio.removeAttribute("src");
+phonicAudio.load();
+
+await delay(500);
+
+speak(word);
+     
 
     wordDiv.dataset.word = word;
 
