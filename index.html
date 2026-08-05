@@ -148,6 +148,11 @@ body{
 </body>
 <script>
 let audioWarmed = false;
+async function warmAudio(){
+    if(audioWarmed) return;
+    audioWarmed = true;
+    console.log("warm");
+}
 const lesson = {
  1:[
      ["sat","pin","tap","pan","sit"],
