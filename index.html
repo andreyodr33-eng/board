@@ -399,6 +399,39 @@ lessonTitle.addEventListener("pointerleave",()=>{
     showNextWord();
 
 }
+async function replayWord(wordDiv, word){
+
+    const letters = wordDiv.querySelectorAll(".letter");
+
+    const hand = document.createElement("div");
+
+    hand.className = "pointer";
+
+    hand.textContent = "☝";
+
+    letters[0].appendChild(hand);
+
+    await delay(500);
+
+    for(let i=1;i<letters.length;i++){
+
+        letters[i].appendChild(hand);
+
+        letters[i].classList.add("active");
+
+        await playPhonic(word[i-1]);
+
+        await delay(300);
+
+        letters[i].classList.remove("active");
+    }
+
+    hand.remove();
+
+    await delay(300);
+
+    speak(word);
+}
 
 function createWord(word){
 
