@@ -439,17 +439,7 @@ function speak(text){
 
     });
 
-    speechSynthesis.cancel();
-
-setTimeout(()=>{
-
-    const u = new SpeechSynthesisUtterance(word);
-
-    u.lang = "en-GB";
-
-    speechSynthesis.speak(u);
-
-},500);
+    await playPhonic("s");
 
     wordDiv.dataset.word = word;
 
