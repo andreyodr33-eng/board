@@ -331,7 +331,7 @@ let pressTimer;
             });
 
             document.getElementById("startLesson")
-            .addEventListener("click",()=>{
+            .addEventListener("click", async()=>{
 
                 lessonToken++;
 
@@ -345,7 +345,12 @@ let pressTimer;
                 board.innerHTML = "";
 
                 panel.remove();
-
+                try{
+                    phonicAudio.src = phonics["s"];
+                    await phonicAudio.play();
+                     phonicAudio.pause();
+                     phonicAudio.currentTime = 0;
+                }catch(e){}
                 showNextWord();
 
             });
@@ -356,16 +361,6 @@ let pressTimer;
 
 });
       
-
-  
-
-    
-
-    
-    
-
-    
-
 lessonTitle.addEventListener("pointerup",()=>{
 
     clearTimeout(pressTimer);
@@ -378,11 +373,7 @@ lessonTitle.addEventListener("pointerleave",()=>{
 
 });
 
-
-
-
-
- function speak(text){
+function speak(text){
 
     const u = new SpeechSynthesisUtterance(text);
 
