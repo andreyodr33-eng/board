@@ -399,8 +399,9 @@ lessonTitle.addEventListener("pointerleave",()=>{
 });
 
 function speak(text){
-
-   speechSynthesis.cancel();
+  return new Promise(resolve=>{
+      
+   //speechSynthesis.cancel();
 
     const utter =
         new SpeechSynthesisUtterance(text);
@@ -435,11 +436,11 @@ function speak(text){
             englishVoice;
 
     }
-
-    speechSynthesis.speak(
-        utter
-    );
-
+    utter.onend = () =>
+        resolve();
+    
+    speechSynthesis.speak(utter);
+  });
 }
 
  function delay(ms){
