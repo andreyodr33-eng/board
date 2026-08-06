@@ -193,7 +193,7 @@ body{
 </body>
 <script>
     
-//let audioWarmed = false;    
+    
 const phonicAudio = new Audio();
 const lesson = {
  1:[
@@ -343,12 +343,7 @@ let pressTimer;
                 board.innerHTML = "";
 
                 panel.remove();
-               // try{
-                //    phonicAudio.src = phonics["s"];
-                 //   await phonicAudio.play();
-                  //   phonicAudio.pause();
-                   //  phonicAudio.currentTime = 0;
-              //  }catch(e){}
+               
                 showNextWord();
 
             });
@@ -423,6 +418,7 @@ function speak(text){
 
     });
 }
+// Разблокировка речи в Safari на iPhone    
 document.addEventListener(
     "pointerup",
     ()=>{
