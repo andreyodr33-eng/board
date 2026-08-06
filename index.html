@@ -373,7 +373,7 @@ lessonTitle.addEventListener("pointerleave",()=>{
 
 function speak(text){
 
-   // speechSynthesis.cancel();
+   speechSynthesis.cancel();
 
     const utter =
         new SpeechSynthesisUtterance(text);
@@ -423,7 +423,18 @@ function speak(text){
 
     });
 }
+document.addEventListener(
+    "pointerup",
+    ()=>{
 
+        const u =
+            new SpeechSynthesisUtterance("");
+
+        speechSynthesis.speak(u);
+
+    },
+    { once:true }
+);
  async function readWord(wordDiv, word){
     isReading = true;  
     const myToken = lessonToken;
