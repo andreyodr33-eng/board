@@ -476,7 +476,9 @@ document.addEventListener(
      letters[i].appendChild(hand);
      letters[i].classList.add("active");
      await playPhonic(word[i-1]);
+     if(myToken !== lessonToken) return;  
      await delay(1200);
+    if(myToken !== lessonToken) return;   
      letters[i].classList.remove("active");
     }
      hand.remove();
@@ -490,7 +492,7 @@ document.addEventListener(
     });
 
     speak(word);
-     
+  if(myToken !== lessonToken) return;  
 
     wordDiv.dataset.word = word;
 
