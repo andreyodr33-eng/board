@@ -459,7 +459,7 @@ function speak(text){
      letters[i].appendChild(hand);
      letters[i].classList.add("active");
      await playPhonic(word[i-1]);
-     await delay(500);
+     await delay(1200);
      letters[i].classList.remove("active");
     }
      hand.remove();
