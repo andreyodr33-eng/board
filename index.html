@@ -185,7 +185,13 @@ body{
 </head>
 
 <body>
-
+<div id="startScreen">
+    <img
+        id="startPiggy"
+        src="piggy.png"
+        alt="Piggy"
+     >
+</div>
 <div id="board"></div>
 <div id="lessonTitle">Lesson1</div>
 <button id="eraseBtn">🧤</button>
@@ -591,11 +597,11 @@ function showNextWord(){
 
     readWord(wordDiv, word);
 }
-document.body.addEventListener("pointerup", () => {
+//document.body.addEventListener("pointerup", () => {
 
-    showNextWord();
+   // showNextWord();
 
-}, { once:true });
+//}, { once:true });
 
 async function eraseBoard(){
 
@@ -641,7 +647,31 @@ async function eraseBoard(){
 
     showNextWord();
 }
+const startPiggy =
+    document.getElementById("startPiggy");
 
+const startScreen =
+    document.getElementById("startScreen");
+
+startPiggy.addEventListener(
+    "pointerup",
+    ()=>{
+
+        const u =
+            new SpeechSynthesisUtterance("");
+
+        speechSynthesis.speak(u);
+
+        startScreen.style.display =
+            "none";
+
+        board.style.display =
+            "block";
+
+        showNextWord();
+
+    }
+);
 </script>
 </html>
 </body>
