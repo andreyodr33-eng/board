@@ -233,28 +233,6 @@ const lessonTitle = document.getElementById("lessonTitle");
 const eraseBtn = document.getElementById("eraseBtn");
 eraseBtn.addEventListener("click", eraseBoard);
     
-async function warmAudio(){
-
-    if(audioWarmed) return;
-
-    audioWarmed = true;
-
-    const audio = new Audio("sounds/s.wav");
-
-    audio.volume = 0;
-
-    try{
-
-        await audio.play();
-
-        audio.pause();
-        audio.currentTime = 0;
-
-    }catch(e){
-
-    }
-
-}
  function playPhonic(letter){
     
     return new Promise(resolve=>{
@@ -395,7 +373,7 @@ lessonTitle.addEventListener("pointerleave",()=>{
 
 function speak(text){
 
-    speechSynthesis.cancel();
+   // speechSynthesis.cancel();
 
     const utter =
         new SpeechSynthesisUtterance(text);
