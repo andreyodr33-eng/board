@@ -674,8 +674,7 @@ async function eraseBoard(){
 const startPiggy =
     document.getElementById("startPiggy");
 
-const startScreen =
-    document.getElementById("startScreen");
+
 
 startPiggy.addEventListener(
     "pointerup",
@@ -686,13 +685,9 @@ startPiggy.addEventListener(
 
         speechSynthesis.speak(u);
 
-        startScreen.style.display =
-            "none";
+       startPiggy.remove(); 
 
-        board.style.display =
-            "block";
-
-        showNextWord();
+         showNextWord();
 
     }
 );
