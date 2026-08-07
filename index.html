@@ -280,7 +280,11 @@ const lesson = {
      
 };
   
-  let currentLesson = 1;
+  let currentLesson = 
+      parseInt(
+          localStorage.getItem("currentLesson")
+          ) || 1;
+    updateLessonTitle();
   let currentGroup = 0;
   let currentWord = 0;
   let words = lesson[currentLesson][currentGroup];
@@ -362,6 +366,10 @@ let pressTimer;
                 if(currentLesson > 1){
 
                     currentLesson--;
+                    localStorage.setItem(
+                        "currentLesson",
+                        currentLesson
+                     );   
 
                     document.getElementById("panelLesson")
                     .textContent =
@@ -377,7 +385,10 @@ let pressTimer;
                 if(currentLesson < Object.keys(lesson).length){
 
                     currentLesson++;
-
+                    localStorage.setItem(
+                        "currentLesson",
+                        currentLesson
+                     );   
                     document.getElementById("panelLesson")
                     .textContent =
                         "Lesson " + currentLesson;
