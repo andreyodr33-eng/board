@@ -216,7 +216,27 @@ body{
     border-radius:50%;
     object-fit:cover;
 } 
-   
+ #startPiggy{
+     animation:piggyWiggle 1.2s infinite;
+ }
+@keyframes piggyWiggle{
+
+    0%,100%{
+
+        transform:
+            translate(-50%,-50%)
+            rotate(-3deg);
+
+    }
+
+    50%{
+
+        transform:
+            translate(-50%,-50%)
+            rotate(3deg);
+
+    }
+}    
 #lessonTitle{
     z-index:2000;
 }    
