@@ -181,33 +181,33 @@ body{
     cursor:pointer;
 }
   
-#startPiggy{
+#startScreen{
 
     position:fixed;
-
-    left:50%;
-    top:50%;
-
-    transform:
-        translate(-50%,-50%);
-
-    width:120px;
-    height:auto;
-    
-    cursor:pointer;
-
-    z-index:1000;
+    inset:0;
+    display:fiex;
+    justify-content:center;
+    align-items:center;
+    background:transparent;
+     z-index:1000;
 } 
-      
+#startPiggy{
+    width:120px;
+    height:120px;
+    cursor:pointer;
+}    
+#lessonTitle{
+    z-index:2000;
+}    
 </style>
 </head>
 
 <body>
-<div id="board">
+<div id="startScreen">
     <img
         id="startPiggy"
         src="piggy.png"
-        
+        alt="Piggy"
      >
 </div>
 <div id="board"></div>
@@ -666,8 +666,13 @@ async function eraseBoard(){
 
     showNextWord();
 }
+
+
 const startPiggy =
     document.getElementById("startPiggy");
+
+const startScreen =
+    document.getElementById("startScreen");
 
 startPiggy.addEventListener(
     "pointerup",
@@ -678,12 +683,13 @@ startPiggy.addEventListener(
 
         speechSynthesis.speak(u);
 
-        startPiggy.style.display =
+        startScreen.style.display =
             "none";
 
-        setTimeout(()=>{
-            showNextWord();
-        },0);
+        board.style.display =
+            "block";
+
+        showNextWord();
 
     }
 );
