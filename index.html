@@ -75,6 +75,30 @@ body{
 
     color:#ffd700;
 }
+ .pointer{
+
+    animation:pointing 0.8s infinite;
+}
+
+@keyframes pointing{
+
+    0%,100%{
+        transform:
+            translateX(-50%)
+            translateY(0)
+            rotate(-5deg);
+    }
+
+    50%{
+        transform:
+            translateX(-50%)
+            translateY(-8px)
+            rotate(5deg);
+    }
+} 
+.pointer.finished{
+    color:white;
+}    
  .hidden{
       color:#1c1c1c;
 }
