@@ -385,23 +385,12 @@ let pressTimer;
 
             });
 
-            document.getElementById("startLesson")
-            .addEventListener("click", async()=>{
+           document.getElementById("startLesson")
+            .addEventListener("click",()=>{
 
-                lessonToken++;
-
-                updateLessonTitle();
-
-                currentGroup = 0;
-                currentWord = 0;
-
-                words = lesson[currentLesson][currentGroup];
-
-                board.innerHTML = "";
-
-                panel.remove();
+             panel.remove();
                
-                showNextWord();
+               
 
             });
 
@@ -667,13 +656,6 @@ async function eraseBoard(){
     showNextWord();
 }
 
-
-const startPiggy =
-    document.getElementById("startPiggy");
-
-const startScreen =
-    document.getElementById("startScreen");
-
 startPiggy.addEventListener(
     "pointerup",
     ()=>{
@@ -686,13 +668,23 @@ startPiggy.addEventListener(
         startScreen.style.display =
             "none";
 
-        board.style.display =
-            "block";
+        lessonToken++;
+
+        updateLessonTitle();
+
+        currentGroup = 0;
+        currentWord = 0;
+
+        words =
+            lesson[currentLesson][currentGroup];
+
+        board.innerHTML = "";
 
         showNextWord();
 
     }
 );
+
 
 </script>
 </body>
