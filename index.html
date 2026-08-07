@@ -669,7 +669,6 @@ async function eraseBoard(){
 const startPiggy =
     document.getElementById("startPiggy");
 
-
 startPiggy.addEventListener(
     "pointerup",
     ()=>{
@@ -679,13 +678,12 @@ startPiggy.addEventListener(
 
         speechSynthesis.speak(u);
 
+        startPiggy.style.display =
+            "none";
+
         setTimeout(()=>{
-
-            startPiggy.remove();
-
             showNextWord();
-
-        },100);
+        },0);
 
     }
 );
