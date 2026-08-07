@@ -351,8 +351,7 @@ let pressTimer;
                     Lesson ${currentLesson}
                 </span>
                 <button id="nextLesson">▶</button>
-                <br/>
-                <button id="startLesson">START</button>
+               
             `;
 
             document.body.appendChild(panel);
@@ -385,15 +384,7 @@ let pressTimer;
 
             });
 
-           document.getElementById("startLesson")
-            .addEventListener("click",()=>{
-
-             panel.remove();
-               
-               
-
-            });
-
+         
         }
 
     },3000);
