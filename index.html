@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reading Board</title>
-
 <style>
 body{
     margin:0;
@@ -158,7 +157,7 @@ body{
 
     background:#1c1c1c;
 
-    border:2px solid white;
+    
 
     padding:20px;
 
@@ -181,11 +180,36 @@ body{
 
     cursor:pointer;
 }
+  
+#startPiggy{
+
+    position:fixed;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    width:120px;
+    height:auto;
+    
+    cursor:pointer;
+
+    z-index:1000;
+} 
+      
 </style>
 </head>
 
 <body>
-
+<div id="board">
+    <img
+        id="startPiggy"
+        src="piggy.png"
+        
+     >
+</div>
 <div id="board"></div>
 <div id="lessonTitle">Lesson1</div>
 <button id="eraseBtn">🧤</button>
@@ -261,6 +285,7 @@ const lesson = {
   let lessonToken = 0;
   let isReading = false;
 const board = document.getElementById("board");
+    
 const lessonTitle = document.getElementById("lessonTitle");
 const eraseBtn = document.getElementById("eraseBtn");
 eraseBtn.addEventListener("click", eraseBoard);
@@ -399,7 +424,8 @@ lessonTitle.addEventListener("pointerleave",()=>{
 });
 
 function speak(text){
-
+  
+      
    speechSynthesis.cancel();
 
     const utter =
@@ -435,11 +461,10 @@ function speak(text){
             englishVoice;
 
     }
-
-    speechSynthesis.speak(
-        utter
-    );
-
+    
+    
+    speechSynthesis.speak(utter);
+  
 }
 
  function delay(ms){
@@ -476,7 +501,9 @@ document.addEventListener(
      letters[i].appendChild(hand);
      letters[i].classList.add("active");
      await playPhonic(word[i-1]);
+     if(myToken !== lessonToken) return;  
      await delay(1200);
+    if(myToken !== lessonToken) return;   
      letters[i].classList.remove("active");
     }
      hand.remove();
@@ -490,7 +517,7 @@ document.addEventListener(
     });
 
     speak(word);
-     
+  if(myToken !== lessonToken) return;  
 
     wordDiv.dataset.word = word;
 
@@ -589,11 +616,11 @@ function showNextWord(){
 
     readWord(wordDiv, word);
 }
-document.body.addEventListener("pointerup", () => {
+//document.body.addEventListener("pointerup", () => {
 
-    showNextWord();
+   // showNextWord();
 
-}, { once:true });
+//}, { once:true });
 
 async function eraseBoard(){
 
@@ -639,8 +666,26 @@ async function eraseBoard(){
 
     showNextWord();
 }
+const startPiggy =
+    document.getElementById("startPiggy");
 
+
+
+startPiggy.addEventListener(
+    "pointerup",
+    ()=>{
+
+        const u =
+            new SpeechSynthesisUtterance("");
+
+        speechSynthesis.speak(u);
+
+       startPiggy.remove(); 
+
+         showNextWord();
+
+    }
+);
 </script>
-</html>
 </body>
-
+</html>
