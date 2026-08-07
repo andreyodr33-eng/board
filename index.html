@@ -670,7 +670,6 @@ const startPiggy =
     document.getElementById("startPiggy");
 
 
-
 startPiggy.addEventListener(
     "pointerup",
     ()=>{
@@ -680,12 +679,17 @@ startPiggy.addEventListener(
 
         speechSynthesis.speak(u);
 
-       startPiggy.remove(); 
+        setTimeout(()=>{
 
-         showNextWord();
+            startPiggy.remove();
+
+            showNextWord();
+
+        },100);
 
     }
 );
+
 </script>
 </body>
 </html>
