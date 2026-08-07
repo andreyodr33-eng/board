@@ -284,7 +284,7 @@ const lesson = {
       parseInt(
           localStorage.getItem("currentLesson")
           ) || 1;
-    updateLessonTitle();
+    
   let currentGroup = 0;
   let currentWord = 0;
   let words = lesson[currentLesson][currentGroup];
@@ -293,6 +293,7 @@ const lesson = {
 const board = document.getElementById("board");
     
 const lessonTitle = document.getElementById("lessonTitle");
+    updateLessonTitle();
 const eraseBtn = document.getElementById("eraseBtn");
 eraseBtn.addEventListener("click", eraseBoard);
     
