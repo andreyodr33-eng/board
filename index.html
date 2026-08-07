@@ -667,7 +667,11 @@ startPiggy.addEventListener(
 
         startScreen.style.display =
             "none";
-
+        const panel =
+            document.getElementById("lessonPanel");
+        if(panel){
+            panel.remove();
+        }    
         lessonToken++;
 
         updateLessonTitle();
