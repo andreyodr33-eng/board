@@ -221,6 +221,27 @@ body{
     cursor:pointer;
     border-radius:50%;
     object-fit:cover;
+} 
+#startPiggy{
+    animation:piggyBounce 1s infinite;
+} 
+@keyframes piggyBounce{
+
+    0%,100%{
+
+        transform:
+            translate(-50%,-50%)
+            rotate(-3deg);
+
+    }
+
+    50%{
+
+        transform:
+            translate(-50%,-55%)
+            rotate(3deg);
+
+    }
 }    
 #lessonTitle{
     z-index:2000;
