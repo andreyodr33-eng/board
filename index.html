@@ -620,7 +620,11 @@ async function playAction(word,row){
 
     wordDiv.dataset.word = word;
      await playAction(word, wordDiv);
-    
+wordDiv.addEventListener("click",()=>{
+       if(isReading) return;
+        replayWord(wordDiv, word);
+
+    });    
 await delay(500);
      isReading = false;
     if(myToken !== lessonToken) return;
