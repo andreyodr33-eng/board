@@ -362,6 +362,18 @@ const lesson = {
   let words = lesson[currentLesson][currentGroup];
   let lessonToken = 0;
   let isReading = false;
+const actions = {
+    sit:[
+        "sit_1.png",
+        "sit_2.png",
+        "sit_3.png"
+    ],
+    tap:[
+        "tap_1.png",
+        "tap_2.png",
+        "tap_3.png"
+     ]
+};       
 const board = document.getElementById("board");
     
 const lessonTitle = document.getElementById("lessonTitle");
@@ -556,23 +568,23 @@ document.addEventListener(
 );
 async function playAction(word,row){
 
+    const frames = actions[word];
+
+    if(!frames) return;
+
     const icon =
         row.querySelector(".actionIcon");
 
-    if(word === "sit"){
+    icon.style.visibility = "visible";
 
-        icon.style.visibility = "visible";
+    for(const frame of frames){
 
-        icon.src = "actions/sit_1.png";
-
-        await delay(500);
-
-        icon.src = "actions/sit_2.png";
+        icon.src = "actions/" + frame;
 
         await delay(500);
 
-        icon.src = "actions/sit_3.png";
     }
+
 }
     
  async function readWord(wordDiv, word){
@@ -608,34 +620,7 @@ async function playAction(word,row){
 
     wordDiv.dataset.word = word;
      await playAction(word, wordDiv);
-    const icon = 
-        wordDiv.querySelector(".actionIcon");
     
-
-if(word === "sit"){
-
-    icon.style.visibility = "visible";
-
-    icon.src = "actions/sit_1.png";
-} 
-
-    wordDiv.addEventListener("click",()=>{
-       if(isReading) return;
-        replayWord(wordDiv, word);
-
-    });
-
-    if(word === "sit"){
-
-    await delay(500);
-
-    icon.src = "actions/sit_2.png";
-
-    await delay(500);
-
-    icon.src = "actions/sit_3.png";
-}
-
 await delay(500);
      isReading = false;
     if(myToken !== lessonToken) return;
