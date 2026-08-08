@@ -694,18 +694,23 @@ async function eraseBoard(){
 
     currentGroup++;
 
-    if(currentGroup >= lesson.length){
+if(currentGroup >= lesson[currentLesson].length){
 
-        currentGroup = 0;
+    board.innerHTML = "";
 
-    }
-
-    words = lesson[currentLesson][currentGroup];
-
+    currentGroup = 0;
     currentWord = 0;
 
-    showNextWord();
+    startScreen.style.display = "flex";
+
+    return;
 }
+
+words = lesson[currentLesson][currentGroup];
+
+currentWord = 0;
+
+showNextWord();
 
 startPiggy.addEventListener(
     "pointerup",
