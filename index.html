@@ -554,6 +554,27 @@ document.addEventListener(
     },
     { once:true }
 );
+async function playAction(word,row){
+
+    const icon =
+        row.querySelector(".actionIcon");
+
+    if(word === "sit"){
+
+        icon.style.visibility = "visible";
+
+        icon.src = "actions/sit_1.png";
+
+        await delay(500);
+
+        icon.src = "actions/sit_2.png";
+
+        await delay(500);
+
+        icon.src = "actions/sit_3.png";
+    }
+}
+    
  async function readWord(wordDiv, word){
     isReading = true;  
     const myToken = lessonToken;
@@ -586,6 +607,7 @@ document.addEventListener(
   if(myToken !== lessonToken) return;  
 
     wordDiv.dataset.word = word;
+     await playAction(word, wordDiv);
     const icon = 
         wordDiv.querySelector(".actionIcon");
     
