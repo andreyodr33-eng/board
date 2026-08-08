@@ -716,10 +716,11 @@ startPiggy.addEventListener(
     "pointerup",
     ()=>{
 
-        const u =
-            new SpeechSynthesisUtterance("");
+      //  const u =
+       //     new SpeechSynthesisUtterance("");
 
-        speechSynthesis.speak(u);
+       // speechSynthesis.speak(u);
+        speechSynthesis.cancel();
 
         startScreen.style.display =
             "none";
