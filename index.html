@@ -586,6 +586,15 @@ document.addEventListener(
   if(myToken !== lessonToken) return;  
 
     wordDiv.dataset.word = word;
+    const icon = wordDiv.parentElement
+    .querySelector(".actionIcon");
+
+if(word === "sit"){
+
+    icon.style.visibility = "visible";
+
+    icon.src = "actions/sit_1.png";
+} 
 
     wordDiv.addEventListener("click",()=>{
        if(isReading) return;
@@ -593,7 +602,18 @@ document.addEventListener(
 
     });
 
-    await delay(1500);
+    if(word === "sit"){
+
+    await delay(500);
+
+    icon.src = "actions/sit_2.png";
+
+    await delay(500);
+
+    icon.src = "actions/sit_3.png";
+}
+
+await delay(500);
      isReading = false;
     if(myToken !== lessonToken) return;
     
