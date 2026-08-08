@@ -272,7 +272,19 @@ body{
 } 
  .word{
      white-space: nowrap;
- }     
+ } 
+@media (orientation: landscape){
+
+    #board{
+
+        display:grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        align-content:start;
+    }
+
+}    
 </style>
 </head>
 
