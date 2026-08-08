@@ -614,14 +614,23 @@ async function replayWord(wordDiv, word){
 }
 function createWord(word){
 
-    const div = document.createElement("div");
+    const row = document.createElement("div");
 
-    div.className = "word";
- //невидимая первая буква
- const hidden = document.createElement("span")
- hidden.className = "letter hidden";
- hidden.textContent = "x";
- div.appendChild(hidden);
+    row.className = "wordRow";
+
+    const wordDiv = document.createElement("div");
+
+    wordDiv.className = "word";
+
+    // невидимая первая буква
+    const hidden = document.createElement("span");
+
+    hidden.className = "letter hidden";
+
+    hidden.textContent = "x";
+
+    wordDiv.appendChild(hidden);
+
     [...word].forEach(ch=>{
 
         const span = document.createElement("span");
@@ -630,10 +639,19 @@ function createWord(word){
 
         span.textContent = ch;
 
-        div.appendChild(span);
+        wordDiv.appendChild(span);
+
     });
 
-    return div;
+    const icon = document.createElement("img");
+
+    icon.className = "actionIcon";
+
+    row.appendChild(wordDiv);
+
+    row.appendChild(icon);
+
+    return row;
 }
 
 function showNextWord(){
