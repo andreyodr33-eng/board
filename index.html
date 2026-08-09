@@ -529,6 +529,12 @@ function speak(text){
 
     const englishVoice =
 
+         voices.find(v =>
+            v.name === "Karen"
+        )
+
+        ||
+
         voices.find(v =>
             v.name === "Samantha"
         )
