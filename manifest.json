@@ -3,8 +3,8 @@
   "short_name": "board",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#f5f5f5",
+  "background_color": "#1c1c1c",
+  "theme_color": "#1c1c1c",
   "icons": [
       {
       "src": "actions/icon-32.png",
