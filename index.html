@@ -925,17 +925,6 @@ startPiggy.addEventListener(
 
     }
 );
-
-</script>
-<script>
-if("serviceWorker" in navigator){
-
-navigator.serviceWorker.register("./service-worker.js")
-.then(()=>console.log("SW registered"));
-navigator.serviceWorker.addEventListener('controllerchange', () => {
-  window.location.reload();
-});
-}
   //ЗАСТАВКА    
 window.addEventListener(
     "load",
@@ -960,6 +949,17 @@ window.addEventListener(
     }
 );
          
+
+</script>
+<script>
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker.register("./service-worker.js")
+.then(()=>console.log("SW registered"));
+navigator.serviceWorker.addEventListener('controllerchange', () => {
+  window.location.reload();
+});
+}
  </script>    
 </body>
 </html>
