@@ -119,29 +119,38 @@ body{
 
     display:none;
 }
-@keyframes crumble{
+.dust{
+position:fixed;
 
-    0%{
+width:6px;
+height:6px;
 
-        opacity:1;
+border-radius:50%;
 
-        transform:translate(0,0) rotate(0deg);
+pointer-events:none;
 
-    }
+z-index:9999;
 
-    100%{
+animation:dustFall 1500ms forwards;
+}
+@keyframes dustFall{
+from{
 
-        opacity:0;
+    opacity:1;
 
-        transform:translate(var(--dx),40px)
-                  rotate(var(--rot));
-
-    }
+    transform:
+        translate(0,0)
+        scale(1);
 }
 
-.crumble{
+to{
 
-    animation:crumble 1s forwards;
+    opacity:0;
+
+    transform:
+        translate(var(--dx),var(--dy))
+        scale(.3);
+  }
 }
 #lessonTitle{
 
@@ -325,7 +334,13 @@ body{
     color:#1976d2;
 
 } 
-      
+.letter{
+    transition: opacity 0.4s;
+}
+.letter.erasing{
+    opacity:0;
+} 
+    
 </style>
 </head>
 
@@ -857,39 +872,136 @@ function showNextWord(){
 
     readWord(wordDiv, word);
 }
+function createDust(element, count = 50){
+const rect =
+    element.getBoundingClientRect();
 
+const color =
+    getComputedStyle(element).color;
+
+for(let i=0;i<count;i++){
+
+    const dust =
+        document.createElement("div");
+
+    dust.className = "dust";
+
+    dust.style.background = color;
+
+    dust.style.left =
+        (rect.left +
+         Math.random()*rect.width) + "px";
+
+    dust.style.top =
+        (rect.top +
+         Math.random()*rect.height) + "px";
+
+    dust.style.setProperty(
+        "--dx",
+        (Math.random()*80 - 40) + "px"
+    );
+
+    dust.style.setProperty(
+        "--dy",
+        (Math.random()*50 + 15) + "px"
+    );
+
+    document.body.appendChild(dust);
+
+    dust.addEventListener(
+        "animationend",
+        ()=>dust.remove()
+    );
+}
+
+setTimeout(()=>{
+    element.style.visibility = "hidden";
+}, 400);
+}
+
+
+function createImageDust(img){
+const rect =
+    img.getBoundingClientRect();
+
+for(let i=0;i<60;i++){
+
+    const dust =
+        document.createElement("div");
+
+    dust.className = "dust";
+
+    dust.style.width = "5px";
+    dust.style.height = "5px";
+
+    dust.style.background =
+        "#ffffff";
+
+    dust.style.left =
+        (rect.left +
+         Math.random()*rect.width) + "px";
+
+    dust.style.top =
+        (rect.top +
+         Math.random()*rect.height) + "px";
+
+    dust.style.setProperty(
+        "--dx",
+        (Math.random()*120 - 60) + "px"
+    );
+
+    dust.style.setProperty(
+        "--dy",
+        (Math.random()*60 + 20) + "px"
+    );
+
+    document.body.appendChild(dust);
+
+    dust.addEventListener(
+        "animationend",
+        ()=>dust.remove()
+    );
+}
+
+img.style.visibility = "hidden";
+}
 
 async function eraseBoard(){
+eraseBtn.style.display = "none";
 
-    eraseBtn.style.display = "none";
+const rows =
+    board.querySelectorAll(".wordRow");
 
-    const allWords = board.querySelectorAll(".word");
+rows.forEach(row=>{
 
-    allWords.forEach(word=>{
+    const letters =
+        row.querySelectorAll(
+            ".letter:not(.hidden)"
+        );
 
-        const letters = word.querySelectorAll(".letter");
+    letters.forEach(letter=>{
 
-        letters.forEach(letter=>{
-
-            const dx = Math.random()*40 - 20;
-
-            const rot = Math.random()*120 - 60;
-
-            letter.style.setProperty("--dx", dx + "px");
-
-            letter.style.setProperty("--rot", rot + "deg");
-
-            letter.classList.add("crumble");
-
-        });
+        createDust(letter,18);
 
     });
 
-    await delay(1200);
+    const icon =
+        row.querySelector(".actionIcon");
 
-    board.innerHTML = "";
+    if(
+        icon &&
+        icon.style.visibility !== "hidden"
+    ){
+        createImageDust(icon);
+    }
 
-    currentGroup++;
+});
+
+await delay(1000);
+
+board.innerHTML = "";
+
+currentGroup++;
 
 if(currentGroup >= lesson[currentLesson].length){
 
@@ -909,6 +1021,7 @@ currentWord = 0;
 
 showNextWord();
 }
+
 startPiggy.addEventListener(
     "pointerup",
     ()=>{
@@ -980,3 +1093,4 @@ navigator.serviceWorker.addEventListener('controllerchange', () => {
  </script>    
 </body>
 </html>
+
