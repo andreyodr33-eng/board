@@ -4,6 +4,7 @@ const CORE_FILES = [
     "./", 
     "./index.html",
     "./manifest.json",
+    "./piggy.png",
     "./actions/icon-32.png",
     "./actions/icon-180.png",
     "./actions/icon-192.png",
