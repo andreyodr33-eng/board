@@ -4,10 +4,10 @@ const CORE_FILES = [
     "./", 
     "./index.html",
     "./manifest.json",
-    "./icons/icon-32.png",
-    "./icons/icon-180.png",
-    "./icons/icon-192.png",
-    "./icons/icon-512.png"
+    "./actions/icon-32.png",
+    "./actions/icon-180.png",
+    "./actions/icon-192.png",
+    "./actions/icon-512.png"
 ];
 const CARD_FILES = [ "S", "A", "T", "I2", "I", "P", "N", "C", "K", "E",
                     "H", "R", "M", "D", "G", "O", "U", "L", "F", "B",
