@@ -1,4 +1,4 @@
-const CACHE_NAME = "reading-board-v6";
+const CACHE_NAME = "reading-board-v7";
 
 // Основные файлы приложения
 const CORE_FILES = [
