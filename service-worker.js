@@ -1,6 +1,6 @@
-const CACHE_NAME = 'Reading Board-v1';
+const APP_CACHE = 'Reading Board-v1';
 
-const CORE_FILES = [ 
+const APP_FILES = [ 
     "./", 
     "./index.html",
     "./manifest.json",
@@ -9,59 +9,63 @@ const CORE_FILES = [
     "./actions/icon-180.png",
     "./actions/icon-192.png",
     "./actions/icon-512.png"
+
+// Изображения действий
+"./actions/ant_1.png",
+"./actions/ant_2.png",
+"./actions/ant_3.png",
+"./actions/cap_1.png",
+"./actions/cap_2.png",
+"./actions/cap_3.png",
+"./actions/cat_1.png",
+"./actions/cat_2.png",
+"./actions/cat_3.png",
+
+// Звуковые файлы
+"./sounds/a.wav",
+"./sounds/b.wav",
+"./sounds/c.wav",
+"./sounds/d.wav",
+"./sounds/e.wav",
+"./sounds/h.wav"
 ];
-const CARD_FILES = [ "S", "A", "T", "I2", "I", "P", "N", "C", "K", "E",
-                    "H", "R", "M", "D", "G", "O", "U", "L", "F", "B",
-                    "J", "Z", "W", "V", "Y", "X"
-                   ].flatMap(name => [
-                       `./letters/${name}.png`, 
-                       `./icons/icon-${name}.png`
-                   ]).concat([ 
-                       "ai", "oa", "ie", "ee", "or", "ng", "oo2", "oo",
-                       "ch", "sh", "th2", "th", "qu", "ou", "oi", "ue",
-                       "er", "ar"
-                   ].flatMap(name => [ 
-                       `./letters/${name}.png`, 
-                       `./icons/icon-${name}.png`
-                   ]));
-const SOUND_FILES = [ "s", "a", "t", "i", "p", "n", "h", "c", "k", "e", 
-                     "r", "m", "d", "g", "o", "u", "l", "f", "b", "ai",
-                     "j", "oa", "ie", "ee", "or", "z", "w", "ng", "v",
-                     "oo", "oo2", "y", "x", "ch", "sh", "th", "th2", 
-                     "qu", "ou", "oi", "ue", "er", "ar"
-                    ].map(name => `./sounds/${name}.wav`);
-const ALL_FILES = [
-    ...CORE_FILES,
-    ...CARD_FILES,
-    ...SOUND_FILES
-];
-self.addEventListener("install", event => { 
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-          .then(cache => cache.addAll(ALL_FILES))
-          .then(() => self.skipWaiting())
-    );
+
+// Установка Service Worker
+self.addEventListener("install", event => {
+event.waitUntil(
+caches.open(APP_CACHE)
+.then(cache => cache.addAll(APP_FILES))
+.then(() => self.skipWaiting())
+);
 });
+
+// Активация и удаление старых кэшей
 self.addEventListener("activate", event => {
-    event.waitUntil(
-        caches.keys()
-         .then(keys => Promise.all(
-             keys 
-             .filter(key => key === "abcphonics-v4")
-             .map(key => caches.delete(key))
-         ))
-        .then(() => self.clients.claim())
-    );
+event.waitUntil(
+caches.keys()
+.then(keys =>
+Promise.all(
+keys
+.filter(key => key !== APP_CACHE)
+.map(key => caches.delete(key))
+)
+)
+.then(() => self.clients.claim())
+);
 });
+
+// Обработка запросов
 self.addEventListener("fetch", event => {
-    if (event.request.method !== "GET") { 
-        return;
-    }
+if (event.request.method !== "GET") return;
+
 event.respondWith(
-    caches.open(CACHE_NAME)
-        .then(cache => cache.match(event.request))
-        .then(response => {
-            return response || fetch(event.request);
-        })
+caches.match(event.request)
+.then(cachedResponse => {
+if (cachedResponse) {
+return cachedResponse;
+}
+
+    return fetch(event.request);
+  })
 );
 });
