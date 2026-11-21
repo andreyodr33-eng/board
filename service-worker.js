@@ -1,4 +1,4 @@
-const APP_CACHE = 'Reading Board-v2';
+const APP_CACHE = 'reading-board-v3';
 
 const APP_FILES = [ 
     "./", 
@@ -8,7 +8,7 @@ const APP_FILES = [
     "./actions/icon-32.png",
     "./actions/icon-180.png",
     "./actions/icon-192.png",
-    "./actions/icon-512.png"
+    "./actions/icon-512.png",
 
 // Изображения действий
     "./actions/ant_1.png",
@@ -32,7 +32,7 @@ const APP_FILES = [
      "./actions/nap_1.png",
      "./actions/nap_2.png",
      "./actions/nap_3.png",
-     "./actions/ pat_1.png",
+     "./actions/pat_1.png",
      "./actions/pat_2.png",
      "./actions/pat_3.png",
      "./actions/pin_1.png",
@@ -41,8 +41,8 @@ const APP_FILES = [
      "./actions/sit_3.png",
      "./actions/sit_2.png",
      "./actions/sit_1.png",
-     "./actions/ tan_1.png",
-     "./actions/ tan_2.png",
+     "./actions/tan_1.png",
+     "./actions/tan_2.png",
      "./actions/tan_3.png",
      "./actions/tap_1.png",
      "./actions/tap_2.png",
