@@ -69,76 +69,11 @@ event.waitUntil(
 
 // Обработка запросов, включая частичные запросы аудио Safari
 self.addEventListener("fetch", event => {
-
-if (event.request.method !== "GET") {
-    return;
-}
+if (event.request.method !== "GET") return;
 
 event.respondWith(
-    caches.open(CACHE_NAME).then(async cache => {
-
-        // Ищем полный файл в кэше без заголовка Range
-        const cached = await cache.match(
-            new Request(event.request.url)
-        );
-
-        if (!cached) {
-            return fetch(event.request);
-        }
-
-        const range = event.request.headers.get("Range");
-
-        // Если запрос обычный, отдаём файл целиком
-        if (!range) {
-            return cached;
-        }
-
-        // Если Safari запросил часть аудиофайла
-        const buffer = await cached.arrayBuffer();
-        const size = buffer.byteLength;
-
-        const match = range.match(/bytes=(\d*)-(\d*)/);
-
-        if (!match) {
-            return cached;
-        }
-
-        let start;
-        let end;
-
-        if (match[1] === "") {
-            const suffixLength = Number(match[2]);
-            start = Math.max(size - suffixLength, 0);
-            end = size - 1;
-        } else {
-            start = Number(match[1]);
-            end = match[2] === ""
-                ? size - 1
-                : Math.min(Number(match[2]), size - 1);
-        }
-
-        if (start >= size || start > end) {
-            return new Response(null, {
-                status: 416,
-                headers: {
-                    "Content-Range": `bytes */${size}`
-                }
-            });
-        }
-
-        const headers = new Headers(cached.headers);
-        headers.set("Accept-Ranges", "bytes");
-        headers.set("Content-Range", `bytes ${start}-${end}/${size}`);
-        headers.set("Content-Length", String(end - start + 1));
-
-        return new Response(
-            buffer.slice(start, end + 1),
-            {
-                status: 206,
-                statusText: "Partial Content",
-                headers
-            }
-        );
-     })
-  );
+    caches.open(CACHE_NAME)
+        .then(cache => cache.match(event.request))
+        .then(response => response || fetch(event.request))
+);
 });
