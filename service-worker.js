@@ -120,16 +120,18 @@ keys
 
 // Обработка запросов
 self.addEventListener("fetch", event => {
+
 if (event.request.method !== "GET") return;
 
 event.respondWith(
-caches.match(event.request)
-.then(cachedResponse => {
-if (cachedResponse) {
-return cachedResponse;
-}
+    caches.match(event.request.url.split("?")[0])
+    .then(cachedResponse => {
 
-    return fetch(event.request);
-  })
+        if (cachedResponse) {
+            return cachedResponse;
+        }
+
+        return fetch(event.request);
+    })
 );
 });
