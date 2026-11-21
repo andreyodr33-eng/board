@@ -1,4 +1,4 @@
-const APP_CACHE = 'Reading Board-v1';
+const APP_CACHE = 'Reading Board-v2';
 
 const APP_FILES = [ 
     "./", 
@@ -11,17 +11,43 @@ const APP_FILES = [
     "./actions/icon-512.png"
 
 // Изображения действий
-"./actions/ant_1.png",
-"./actions/ant_2.png",
-"./actions/ant_3.png",
-"./actions/cap_1.png",
-"./actions/cap_2.png",
-"./actions/cap_3.png",
-"./actions/cat_1.png",
-"./actions/cat_2.png",
-"./actions/cat_3.png",
-
-// Звуковые файлы
+    "./actions/ant_1.png",
+    "./actions/ant_2.png",
+     "./actions/ant_3.png",
+     "./actions/cap_1.png",
+     "./actions/cap_2.png",
+     "./actions/cap_3.png",
+     "./actions/cat_1.png",
+     "./actions/cat_2.png",
+     "./actions/cat_3.png",
+     "./actions/cop_1.png",
+     "./actions/cop_2.png",
+     "./actions/cop_3.png", 
+     "./actions/cut_1.png",
+     "./actions/cut_2.png",
+     "./actions/cut_3.png",
+     "./actions/kid_1.png",
+     "./actions/kid_2.png",
+     "./actions/kid_3.png",
+     "./actions/nap_1.png",
+     "./actions/nap_2.png",
+     "./actions/nap_3.png",
+     "./actions/ pat_1.png",
+     "./actions/pat_2.png",
+     "./actions/pat_3.png",
+     "./actions/pin_1.png",
+     "./actions/pin_2.png",
+     "./actions/pin_3.png",
+     "./actions/sit_3.png",
+     "./actions/sit_2.png",
+     "./actions/sit_1.png",
+     "./actions/ tan_1.png",
+     "./actions/ tan_2.png",
+     "./actions/tan_3.png",
+     "./actions/tap_1.png",
+     "./actions/tap_2.png",
+     "./actions/tap_3.png",
+  // Звуковые файлы
    "./sounds/s.wav",
    "./sounds/a.wav",
    "./ sounds/t.wav",
