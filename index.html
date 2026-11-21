@@ -563,22 +563,23 @@ let pressTimer;
         const password = prompt("Пароль");
 
         if(password === "1234"){
-
+           document.getElementById("lessonPanel")?.remove();
             const panel = document.createElement("div");
 
             panel.id = "lessonPanel";
-
             panel.innerHTML = `
-                <button id="prevLesson">◀</button>
-                <span id="panelLesson">
-                    Lesson ${currentLesson}
-                </span>
-                <button id="nextLesson">▶</button>
-               
+            <button id="prevLesson">◀</button>
+            <span id="panelLesson">
+            Lesson ${currentLesson}
+            </span> <button id="nextLesson">▶</button>
+            <button id="closeLesson">×</button>
             `;
 
-            document.body.appendChild(panel);
-
+           document.body.appendChild(panel);
+            document.getElementById("closeLesson") 
+              .addEvtntListener("click",()=>{
+                  panel.remove();
+              });      
             document.getElementById("prevLesson")
             .addEventListener("click",()=>{
 
