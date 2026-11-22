@@ -371,7 +371,7 @@ to{
 <script>
     
     
-  
+const phonicAudio = new Audio();  
 const lesson = {
  1:[
      ["sit","tap","pin","ant","nap"],
@@ -435,12 +435,7 @@ const lesson = {
     ar:"sounds/ar.wav"
      
 };
- const phonicAudio = {};
-      for (const letter in phonics) {
-      phonicAudio[letter] = new Audio();
-      phonicAudio[letter].src = phonics[letter];
-      phonicAudio[letter].preload = "auto";
-}
+ 
     
   let currentLesson = 
       parseInt(
