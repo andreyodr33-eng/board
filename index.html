@@ -371,11 +371,7 @@ to{
 <script>
     
     
-  const phonicAudio = {};
-
-    for (const letter in phonics) {
-    phonicAudio[letter] = new Audio(phonics[letter]);
-}
+  
 const lesson = {
  1:[
      ["sit","tap","pin","ant","nap"],
@@ -439,7 +435,11 @@ const lesson = {
     ar:"sounds/ar.wav"
      
 };
-  
+ const phonicAudio = {};
+
+    for (const letter in phonics) {
+    phonicAudio[letter] = new Audio(phonics[letter]);
+} 
   let currentLesson = 
       parseInt(
           localStorage.getItem("currentLesson")
