@@ -517,21 +517,29 @@ const eraseBtn = document.getElementById("eraseBtn");
 eraseBtn.addEventListener("click", eraseBoard);
     
 function playPhonic(letter){
+    
+    return new Promise(resolve=>{
 
-return new Promise(resolve=>{
+        phonicAudio.pause();
 
-    const audio = phonicAudio[letter];
+        phonicAudio.removeAttribute("src");
 
-    audio.pause();
-    audio.currentTime = 0;
+        phonicAudio.load();
 
-    audio.onended = resolve;
-    audio.onerror = resolve;
+        phonicAudio.src = phonics[letter];
 
-    audio.play().catch(resolve);
+        phonicAudio.onended = resolve;
 
-});
+        phonicAudio.onerror = resolve;
+
+        phonicAudio.play()
+        .catch(resolve);
+
+    });
+
 }
+
+
 
  function updateLessonTitle(){
       lessonTitle.textContent =
