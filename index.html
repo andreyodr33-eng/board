@@ -371,7 +371,11 @@ to{
 <script>
     
     
-const phonicAudio = new Audio();
+  const phonicAudio = {};
+
+    for (const letter in phonics) {
+    phonicAudio[letter] = new Audio(phonics[letter]);
+}
 const lesson = {
  1:[
      ["sit","tap","pin","ant","nap"],
@@ -515,27 +519,21 @@ const lessonTitle = document.getElementById("lessonTitle");
 const eraseBtn = document.getElementById("eraseBtn");
 eraseBtn.addEventListener("click", eraseBoard);
     
- function playPhonic(letter){
-    
-    return new Promise(resolve=>{
+function playPhonic(letter){
 
-        phonicAudio.pause();
+return new Promise(resolve=>{
 
-        phonicAudio.removeAttribute("src");
+    const audio = phonicAudio[letter];
 
-        phonicAudio.load();
+    audio.pause();
+    audio.currentTime = 0;
 
-        phonicAudio.src = phonics[letter];
+    audio.onended = resolve;
+    audio.onerror = resolve;
 
-        phonicAudio.onended = resolve;
+    audio.play().catch(resolve);
 
-        phonicAudio.onerror = resolve;
-
-        phonicAudio.play()
-        .catch(resolve);
-
-    });
-
+});
 }
 
  function updateLessonTitle(){
