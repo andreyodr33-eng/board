@@ -436,10 +436,12 @@ const lesson = {
      
 };
  const phonicAudio = {};
-
-    for (const letter in phonics) {
-    phonicAudio[letter] = new Audio(phonics[letter]);
-} 
+      for (const letter in phonics) {
+      phonicAudio[letter] = new Audio();
+      phonicAudio[letter].src = phonics[letter];
+      phonicAudio[letter].preload = "auto";
+}
+    
   let currentLesson = 
       parseInt(
           localStorage.getItem("currentLesson")
