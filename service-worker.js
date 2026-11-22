@@ -1,4 +1,4 @@
-const CACHE_NAME = "reading-board-v7";
+const CACHE_NAME = "reading-board-v8";
 
 // Основные файлы приложения
 const CORE_FILES = [
@@ -42,12 +42,19 @@ const ALL_FILES = [
 
 // Установка Service Worker
 self.addEventListener("install", event => {
-
-event.waitUntil(
-    caches.open(CACHE_NAME)
-        .then(cache => cache.addAll(ALL_FILES))
-        .then(() => self.skipWaiting())
-);
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(async cache => {
+                for (const file of ALL_FILES) {
+                    try {
+                        await cache.add(file);
+                    } catch (error) {
+                        console.warn("Не удалось сохранить:", file, error);
+                    }
+                }
+            })
+            .then(() => self.skipWaiting())
+    );
 });
 
 // Активация Service Worker
